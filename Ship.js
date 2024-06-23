@@ -7,8 +7,8 @@ class Ship {
         this.slots = slots; // Total slots available on the ship
         this.usedSlots = 0;
         this.propulsions = [];
-        this.shipWidth = 20;
-        this.shipLength = 30;
+        this.shipWidth = 30; // Update this with your current width
+        this.shipLength = 15; // Update this with your current length
         this.drag = 0.99;
     }
 
@@ -65,12 +65,6 @@ class Ship {
                     force.mult(-1);
                     this.applyForce(force);
                 }
-                if (keyIsDown(65)) {  // A key
-                    this.angle -= 0.05;
-                }
-                if (keyIsDown(68)) {  // D key
-                    this.angle += 0.05;
-                }
             } else if (propulsion instanceof Thrusters) {
                 if (keyIsDown(81)) {  // Q key
                     let force = propulsion.applyThrust(this.angle - HALF_PI);
@@ -90,5 +84,12 @@ class Ship {
                 }
             }
         });
+
+        if (keyIsDown(65)) {  // A key
+            this.angle -= 0.05;
+        }
+        if (keyIsDown(68)) {  // D key
+            this.angle += 0.05;
+        }
     }
 }
