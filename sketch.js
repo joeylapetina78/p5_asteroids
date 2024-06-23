@@ -2,7 +2,8 @@ let ship;
 let engine, thrusters, booster;
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+  let canvas = createCanvas(windowWidth - 200, windowHeight);
+  canvas.parent('canvas-container');
     ship = new Ship(width / 2, height / 2, 3); // Ship with 3 slots
 
     engine = new Engine(0.1, 'BrandA', 'ModelX', 1);
@@ -25,3 +26,4 @@ function draw() {
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
+
