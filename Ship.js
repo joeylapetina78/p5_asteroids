@@ -1,5 +1,5 @@
 class Ship {
-    constructor(x, y, slots) {
+    constructor(x, y, slots, brand, model, drag) {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
         this.acc = createVector(0, 0);
@@ -9,7 +9,9 @@ class Ship {
         this.propulsions = [];
         this.shipWidth = 30; // Update this with your current width
         this.shipLength = 15; // Update this with your current length
-        this.drag = 0.99;
+        this.brand = brand;
+        this.model = model;
+        this.drag = drag;
     }
 
     addPropulsion(propulsion) {
@@ -62,7 +64,7 @@ class Ship {
                 }
                 if (keyIsDown(83)) {  // S key
                     let force = propulsion.applyThrust(this.angle);
-                    force.mult(-1);
+                    force.mult(-.1);
                     this.applyForce(force);
                 }
             } else if (propulsion instanceof Thrusters) {
