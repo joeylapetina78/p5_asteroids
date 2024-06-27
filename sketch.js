@@ -49,9 +49,10 @@ function draw() {
     ship.edges();
     ship.display();
     ship.controls();
-
+    
     asteroids.update();
     asteroids.display();
+    asteroids.checkCollisions(ship);
     
     updateGameInfo();
 }
@@ -59,6 +60,7 @@ function draw() {
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
+
 
 function updateGameInfo() {
     document.getElementById('sb').innerText = `Brand: ${ship.brand}`;

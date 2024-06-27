@@ -13,8 +13,11 @@ class AsteroidSpawner {
     }
 
     update() {
-        for (let asteroid of this.asteroids) {
-            asteroid.update();
+        for (let i = this.asteroids.length - 1; i >= 0; i--) {
+            this.asteroids[i].update();
+            if (this.asteroids[i].toBeDestroyed) {
+                this.asteroids.splice(i, 1); // Remove the asteroid if flagged for destruction
+            }
         }
     }
 
@@ -24,13 +27,13 @@ class AsteroidSpawner {
         }
     }
 
-    checkCollisions() {
+    checkCollisions(ship) {
         for (let i = this.asteroids.length - 1; i >= 0; i--) {
-            if (this.asteroids[i].isClicked(mouseX, mouseY)) {
+            let distance = dist(ship.pos.x, ship.pos.y, this.asteroids[i].pos.x, this.asteroids[i].pos.y);
+            if (distance < this.asteroids[i].radius + ship.shipWidth / 2) {
                 let newAsteroids = this.asteroids[i].break();
-                this.asteroids.splice(i, 1);  // Remove the clicked asteroid
+                this.asteroids.splice(i, 1);  // Remove the collided asteroid
                 this.asteroids = this.asteroids.concat(newAsteroids);  // Add the new smaller asteroids
-                console.log(`Asteroid broken into ${newAsteroids.length} pieces`);
             }
         }
     }

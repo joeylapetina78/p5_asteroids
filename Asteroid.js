@@ -7,7 +7,8 @@ class Asteroid {
         this.angle = random(TWO_PI);
         this.vel = p5.Vector.fromAngle(this.angle).mult(this.speed);
         this.vertices = this.createVertices();
-        console.log(`Asteroid created at (${this.pos.x}, ${this.pos.y}) with size ${this.size} and radius ${this.radius}`);
+        this.color = this.getColor();
+        this.destroyTime = this.size === 'small' ? millis() + random(3500, 6000) : null; // Destroy small asteroids after 5 seconds
     }
 
     getRadius() {
@@ -20,6 +21,13 @@ class Asteroid {
             default:
                 return random(41, 60);
         }
+    }
+
+    getColor() {
+        if (this.size === 'small') {
+            return color(0, 255, 0); // Green for small asteroids
+        }
+        return color(255); // White for other sizes
     }
 
     createVertices() {
@@ -38,13 +46,18 @@ class Asteroid {
     update() {
         this.pos.add(this.vel);
         this.edges();
+
+        // Check if the asteroid should be destroyed
+        if (this.destroyTime && millis() > this.destroyTime) {
+            this.destroy();
+        }
     }
 
     display() {
         push();
         translate(this.pos.x, this.pos.y);
         noFill();
-        stroke(255);
+        stroke(this.color);
         beginShape();
         for (let v of this.vertices) {
             vertex(v.x, v.y);
@@ -61,26 +74,27 @@ class Asteroid {
     }
 
     break() {
-        console.log(`Breaking asteroid of size ${this.size} at (${this.pos.x}, ${this.pos.y})`);
         let newAsteroids = [];
         if (this.size === 'large') {
             for (let i = 0; i < random(2, 4); i++) {
-                newAsteroids.push(new Asteroid(this.pos.x, this.pos.y, 'medium'));
+                let offset = p5.Vector.random2D().mult(this.radius / 2);
+                let newAsteroid = new Asteroid(this.pos.x + offset.x, this.pos.y + offset.y, 'medium');
+                newAsteroid.vel = p5.Vector.random2D().mult(random(1, 2));
+                newAsteroids.push(newAsteroid);
             }
         } else if (this.size === 'medium') {
             for (let i = 0; i < random(2, 4); i++) {
-                newAsteroids.push(new Asteroid(this.pos.x, this.pos.y, 'small'));
+                let offset = p5.Vector.random2D().mult(this.radius / 2);
+                let newAsteroid = new Asteroid(this.pos.x + offset.x, this.pos.y + offset.y, 'small');
+                newAsteroid.vel = p5.Vector.random2D().mult(random(1, 2));
+                newAsteroids.push(newAsteroid);
             }
         }
         return newAsteroids;
     }
 
-    isClicked(mouseX, mouseY) {
-        let distance = dist(mouseX, mouseY, this.pos.x, this.pos.y);
-        let clicked = distance < this.radius;
-        if (clicked) {
-            console.log(`Asteroid of size ${this.size} clicked at (${this.pos.x}, ${this.pos.y}) with distance ${distance}`);
-        }
-        return clicked;
+    destroy() {
+        // This function will be used to flag the asteroid for removal
+        this.toBeDestroyed = true;
     }
 }
