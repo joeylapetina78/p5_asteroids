@@ -33,10 +33,13 @@ function setup() {
     let orion_sigma_engine = new Engine(0.14, 'Orion Systems', 'Sigma', 1);
     let orion_agile_thrusters = new Thrusters(0.05, 'Orion Systems', 'Agile', 1);
 
-    ship = takamota_ship;
-    ship.addPropulsion(takamota_x_engine);
-    ship.addPropulsion(takamota_jimsoms_thrusters);
+    ship = zenith_high_perf_ship;
+    ship.addPropulsion(zenith_delta_engine);
+    ship.addPropulsion(zenith_quick_thrusters);
     ship.addPropulsion(zenith_rapid_booster);
+
+    // Create the asteroid spawner
+    asteroids = new AsteroidSpawner(10);  // Example number of initial asteroids
 
 }
 
@@ -46,6 +49,10 @@ function draw() {
     ship.edges();
     ship.display();
     ship.controls();
+
+    asteroids.update();
+    asteroids.display();
+    
     updateGameInfo();
 }
 
