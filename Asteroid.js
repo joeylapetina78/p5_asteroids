@@ -8,7 +8,7 @@ class Asteroid {
         this.vel = p5.Vector.fromAngle(this.angle).mult(this.speed);
         this.vertices = this.createVertices();
         this.color = this.getColor();
-        this.destroyTime = this.size === 'small' ? millis() + random(3500, 6000) : null; // Destroy small asteroids after 5 seconds
+        this.destroyTime = this.size === 'small' ? millis() + random(5000, 10000) : null; // Destroy small asteroids after 5 seconds
         this.bornTime = millis();
         this.invulnerabilityDuration = 1000; // 2 seconds of invulnerability
     }
@@ -88,7 +88,7 @@ class Asteroid {
             for (let i = 0; i < random(2, 4); i++) {
                 let offset = p5.Vector.random2D().mult(this.radius / 2);
                 let newAsteroid = new Asteroid(this.pos.x + offset.x, this.pos.y + offset.y, 'small');
-                newAsteroid.vel = p5.Vector.random2D().mult(random(1, 2));
+                newAsteroid.vel = p5.Vector.random2D().mult(random(.1, .5));
                 newAsteroids.push(newAsteroid);
             }
         }
