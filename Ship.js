@@ -77,7 +77,7 @@ class Ship {
                     this.applyForce(force);
                 }
             } else if (propulsion instanceof Booster) {
-                if (keyIsDown(32) && !propulsion.isActive()) {  // Space key for booster
+                if (keyIsDown(70) && !propulsion.isActive()) {  // "F" key for booster
                     propulsion.activate();
                 }
                 if (propulsion.isActive()) {

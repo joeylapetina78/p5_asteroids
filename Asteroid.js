@@ -9,6 +9,8 @@ class Asteroid {
         this.vertices = this.createVertices();
         this.color = this.getColor();
         this.destroyTime = this.size === 'small' ? millis() + random(3500, 6000) : null; // Destroy small asteroids after 5 seconds
+        this.bornTime = millis();
+        this.invulnerabilityDuration = 1000; // 2 seconds of invulnerability
     }
 
     getRadius() {
@@ -96,5 +98,9 @@ class Asteroid {
     destroy() {
         // This function will be used to flag the asteroid for removal
         this.toBeDestroyed = true;
+    }
+
+    isInvulnerable() {
+        return millis() - this.bornTime < this.invulnerabilityDuration;
     }
 }
