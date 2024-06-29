@@ -55,7 +55,7 @@ class Ship {
 
     applyCollisionForce(force) {
         this.vel.add(force);
-        this.angle += random(-0.1, 0.1); // Random small rotation on collision
+        this.angle += random(-0.5, 0.5); // Random small rotation on collision
     }
 
     edges() {
