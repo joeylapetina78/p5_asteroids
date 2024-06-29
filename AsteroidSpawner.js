@@ -34,12 +34,19 @@ class AsteroidSpawner {
             }
             let distance = dist(ship.pos.x, ship.pos.y, this.asteroids[i].pos.x, this.asteroids[i].pos.y);
             if (distance < this.asteroids[i].radius + ship.shipWidth / 2) {
+                // Apply collision response to the ship
+                let collisionForce = p5.Vector.sub(ship.pos, this.asteroids[i].pos);
+                collisionForce.normalize();
+                collisionForce.mult(this.asteroids[i].speed * 0.9); // Adjust the force multiplier as needed
+                ship.applyCollisionForce(collisionForce);
+                
                 let newAsteroids = this.asteroids[i].break();
                 this.asteroids.splice(i, 1);  // Remove the collided asteroid
                 this.asteroids = this.asteroids.concat(newAsteroids);  // Add the new smaller asteroids
             }
         }
     }
+
 
     checkAmmoCollisions(ammo) {
         for (let i = this.asteroids.length - 1; i >= 0; i--) {
@@ -56,4 +63,3 @@ class AsteroidSpawner {
         return false;  // No collision
     }
 }
-

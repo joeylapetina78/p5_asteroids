@@ -53,6 +53,11 @@ class Ship {
         this.acc.add(force);
     }
 
+    applyCollisionForce(force) {
+        this.vel.add(force);
+        this.angle += random(-0.1, 0.1); // Random small rotation on collision
+    }
+
     edges() {
         if (this.pos.x > width) this.pos.x = 0;
         else if (this.pos.x < 0) this.pos.x = width;
