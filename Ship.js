@@ -40,13 +40,13 @@ class Ship {
         this.weaponSystem.display();
     }
 
-    update() {
+    update(asteroidSpawner) {
         this.vel.add(this.acc);
         this.vel.mult(this.drag);
         this.pos.add(this.vel);
         this.acc.mult(0);  // Reset acceleration
 
-        this.weaponSystem.update();
+        this.weaponSystem.update(asteroidSpawner);
     }
 
     applyForce(force) {

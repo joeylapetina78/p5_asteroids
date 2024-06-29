@@ -40,5 +40,17 @@ class AsteroidSpawner {
             }
         }
     }
+
+    checkAmmoCollisions(ammo) {
+        for (let i = this.asteroids.length - 1; i >= 0; i--) {
+            if (ammo.hits(this.asteroids[i])) {
+                let newAsteroids = this.asteroids[i].break();
+                this.asteroids.splice(i, 1);  // Remove the hit asteroid
+                this.asteroids = this.asteroids.concat(newAsteroids);  // Add the new smaller asteroids
+                return true;  // Collision occurred
+            }
+        }
+        return false;  // No collision
+    }
 }
 

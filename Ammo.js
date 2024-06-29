@@ -21,4 +21,9 @@ class Ammo {
     isOffScreen() {
         return this.pos.x < 0 || this.pos.x > width || this.pos.y < 0 || this.pos.y > height || this.lifetime <= 0;
     }
+
+    hits(asteroid) {
+        let d = dist(this.pos.x, this.pos.y, asteroid.pos.x, asteroid.pos.y);
+        return d < asteroid.radius;
+    }
 }

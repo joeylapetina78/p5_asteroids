@@ -13,11 +13,16 @@ class WeaponSystem {
         }
     }
 
-    update() {
+    update(asteroidSpawner) {
         for (let i = this.ammoList.length - 1; i >= 0; i--) {
             this.ammoList[i].update();
             if (this.ammoList[i].isOffScreen()) {
                 this.ammoList.splice(i, 1);
+            } else {
+                // Check for collisions with asteroids
+                if (asteroidSpawner.checkAmmoCollisions(this.ammoList[i])) {
+                    this.ammoList.splice(i, 1);
+                }
             }
         }
     }

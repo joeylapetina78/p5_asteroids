@@ -1,5 +1,4 @@
 let ship;
-let engine, thrusters, booster;
 
 function setup() {
     let canvas = createCanvas(windowWidth - 200, windowHeight);
@@ -35,8 +34,8 @@ function setup() {
 
     ship = takamota_ship;
     ship.addPropulsion(takamota_x_engine);
-    //ship.addPropulsion(zenith_quick_thrusters);
-    //ship.addPropulsion(zenith_rapid_booster);
+    ship.addPropulsion(takamota_jimsoms_thrusters);
+    ship.addPropulsion(takamota_2000_booster);
 
     // Create the asteroid spawner
     asteroids = new AsteroidSpawner(10);  // Example number of initial asteroids
@@ -45,7 +44,7 @@ function setup() {
 
 function draw() {
     background(0);
-    ship.update();
+    ship.update(asteroids);
     ship.edges();
     ship.display();
     ship.controls();
@@ -61,12 +60,10 @@ function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 
-
 function updateGameInfo() {
     document.getElementById('sb').innerText = `Brand: ${ship.brand}`;
     document.getElementById('sm').innerText = `Model: ${ship.model}`;
     
-    // Clear existing propulsion info
     document.getElementById('propulsion-info').innerHTML = '';
 
     ship.propulsions.forEach((propulsion, index) => {
@@ -81,4 +78,3 @@ function updateGameInfo() {
         document.getElementById('propulsion-info').insertAdjacentHTML('beforeend', info);
     });
 }
-
