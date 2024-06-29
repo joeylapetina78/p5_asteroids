@@ -12,6 +12,7 @@ class Ship {
         this.brand = brand;
         this.model = model;
         this.drag = drag;
+        this.weaponSystem = new WeaponSystem(10, 1); 
     }
 
     addPropulsion(propulsion) {
@@ -35,6 +36,8 @@ class Ship {
         vertex(-this.shipWidth / 2, -this.shipLength / 2);
         endShape(CLOSE);
         pop();
+
+        this.weaponSystem.display();
     }
 
     update() {
@@ -42,6 +45,8 @@ class Ship {
         this.vel.mult(this.drag);
         this.pos.add(this.vel);
         this.acc.mult(0);  // Reset acceleration
+
+        this.weaponSystem.update();
     }
 
     applyForce(force) {
@@ -92,6 +97,10 @@ class Ship {
         }
         if (keyIsDown(68)) {  // D key
             this.angle += 0.05;
+        }
+
+        if (keyIsDown(32)) { // Spacebar key
+            this.weaponSystem.fire(this.pos, this.angle);
         }
     }
 }

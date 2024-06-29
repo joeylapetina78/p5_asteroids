@@ -8,14 +8,16 @@
         body {
             margin: 0;
             display: flex;
+            height: 100vh; /* Ensure full height */
         }
         #info {
-            width: 200px;
+            width: 25%; /* 2/5th of the width */
             padding: 20px;
             background-color: #f0f0f0;
+            box-sizing: border-box; /* Include padding in the width */
         }
         #canvas-container {
-            flex-grow: 1;
+            width: 75%; /* 3/5th of the width */
             position: relative;
         }
     </style>
@@ -39,5 +41,7 @@
     <script src="sketch.js"></script>
     <script src="Asteroid.js"></script>
     <script src="AsteroidSpawner.js"></script>
+    <script src="Ammo.js"></script>
+    <script src="WeaponSystem.js"></script>
 </body>
 </html>
