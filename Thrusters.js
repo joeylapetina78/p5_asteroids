@@ -1,5 +1,5 @@
 class Thrusters extends Propulsion {
-    constructor(force, brand, model, slotSize) {
-        super(force, brand, model, slotSize);
+    constructor(force, brand, model, slotSize, fuelConsumption) {
+        super(force, brand, model, slotSize, fuelConsumption);
     }
 }

@@ -1,5 +1,5 @@
 class Ship {
-    constructor(x, y, slots, brand, model, drag) {
+    constructor(x, y, slots, brand, model, drag, fuel) {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
         this.acc = createVector(0, 0);
@@ -12,6 +12,7 @@ class Ship {
         this.brand = brand;
         this.model = model;
         this.drag = drag;
+        this.fuel = fuel; // Add fuel property
         this.weaponSystem = new WeaponSystem(10, 1); 
     }
 
@@ -69,30 +70,49 @@ class Ship {
         this.propulsions.forEach(propulsion => {
             if (propulsion instanceof Engine) {
                 if (keyIsDown(87)) {  // W key
-                    let force = propulsion.applyThrust(this.angle);
-                    this.applyForce(force);
+                    if (this.fuel > 0) {
+                        let force = propulsion.applyThrust(this.angle);
+                        this.applyForce(force);
+                        this.fuel -= propulsion.fuelConsumption;
+                    }
                 }
                 if (keyIsDown(83)) {  // S key
-                    let force = propulsion.applyThrust(this.angle);
-                    force.mult(-.1);
-                    this.applyForce(force);
+                    if (this.fuel > 0) {
+                        let force = propulsion.applyThrust(this.angle);
+                        force.mult(-.1);
+                        this.applyForce(force);
+                        this.fuel -= propulsion.fuelConsumption;
+                    }
                 }
             } else if (propulsion instanceof Thrusters) {
                 if (keyIsDown(81)) {  // Q key
-                    let force = propulsion.applyThrust(this.angle - HALF_PI);
-                    this.applyForce(force);
+                    if (this.fuel > 0) {
+                        let force = propulsion.applyThrust(this.angle - HALF_PI);
+                        this.applyForce(force);
+                        this.fuel -= propulsion.fuelConsumption;
+                    }
                 }
                 if (keyIsDown(69)) {  // E key
-                    let force = propulsion.applyThrust(this.angle + HALF_PI);
-                    this.applyForce(force);
+                    if (this.fuel > 0) {
+                        let force = propulsion.applyThrust(this.angle + HALF_PI);
+                        this.applyForce(force);
+                        this.fuel -= propulsion.fuelConsumption;
+                    }
                 }
             } else if (propulsion instanceof Booster) {
                 if (keyIsDown(70) && !propulsion.isActive()) {  // "F" key for booster
-                    propulsion.activate();
+                    if (this.fuel > 0) {
+                        propulsion.activate();
+                    }
                 }
                 if (propulsion.isActive()) {
-                    let force = propulsion.applyThrust(this.angle);
-                    this.applyForce(force);
+                    if (this.fuel > 0) {
+                        let force = propulsion.applyThrust(this.angle);
+                        this.applyForce(force);
+                        this.fuel -= propulsion.fuelConsumption;
+                    } else {
+                        propulsion.deactivate();
+                    }
                 }
             }
         });

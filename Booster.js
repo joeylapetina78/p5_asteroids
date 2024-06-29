@@ -1,6 +1,6 @@
 class Booster extends Propulsion {
-    constructor(force, brand, model, slotSize, duration) {
-        super(force, brand, model, slotSize);
+    constructor(force, brand, model, slotSize, duration, fuelConsumption) {
+        super(force, brand, model, slotSize, fuelConsumption);
         this.duration = duration; // Duration for which the booster applies force in milliseconds
         this.active = false;
         this.startTime = 0;
@@ -11,11 +11,15 @@ class Booster extends Propulsion {
         this.startTime = millis();
     }
 
+    deactivate() {
+        this.active = false;
+    }
+
     isActive() {
         if (this.active && (millis() - this.startTime < this.duration)) {
             return true;
         } else {
-            this.active = false;
+            this.deactivate();
             return false;
         }
     }
