@@ -43,6 +43,9 @@ class AsteroidSpawner {
 
     checkAmmoCollisions(ammo) {
         for (let i = this.asteroids.length - 1; i >= 0; i--) {
+            if (this.asteroids[i].isInvulnerable()) {
+                continue; // Skip invulnerable asteroids
+            }
             if (ammo.hits(this.asteroids[i])) {
                 let newAsteroids = this.asteroids[i].break();
                 this.asteroids.splice(i, 1);  // Remove the hit asteroid
