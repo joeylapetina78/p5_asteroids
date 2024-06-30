@@ -25,6 +25,10 @@ class Ship {
         }
     }
 
+    addFuel(amount) {
+        this.fuel += amount;
+    }
+
     display() {
         push();
         translate(this.pos.x, this.pos.y);

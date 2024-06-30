@@ -40,7 +40,7 @@ class AsteroidSpawner {
                 collisionForce.mult(this.asteroids[i].speed * 0.9); // Adjust the force multiplier as needed
                 ship.applyCollisionForce(collisionForce);
                 
-                let newAsteroids = this.asteroids[i].break();
+                let newAsteroids = this.asteroids[i].break(ship);
                 this.asteroids.splice(i, 1);  // Remove the collided asteroid
                 this.asteroids = this.asteroids.concat(newAsteroids);  // Add the new smaller asteroids
             }

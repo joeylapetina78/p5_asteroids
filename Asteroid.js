@@ -75,7 +75,7 @@ class Asteroid {
         else if (this.pos.y < -this.radius) this.pos.y = height + this.radius;
     }
 
-    break() {
+    break(ship = null) {
         let newAsteroids = [];
         if (this.size === 'large') {
             for (let i = 0; i < random(2, 4); i++) {
@@ -91,6 +91,8 @@ class Asteroid {
                 newAsteroid.vel = p5.Vector.random2D().mult(random(.1, .5));
                 newAsteroids.push(newAsteroid);
             }
+        }  else if (this.size === 'small' && this.color.levels[1] === 255 && ship) { // Check if it's green
+            ship.addFuel(50); // Add fuel to the ship
         }
         return newAsteroids;
     }
